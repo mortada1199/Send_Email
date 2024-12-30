@@ -29,6 +29,7 @@ class SendBulkEmails extends Command
             $this->info('No emails to send.');
             return;
         }
+    
 
         foreach ($emails as $email) {
             try {
