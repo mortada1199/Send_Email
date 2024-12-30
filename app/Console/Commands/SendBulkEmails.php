@@ -21,8 +21,8 @@ class SendBulkEmails extends Command
     public function handle()
     {
         // جلب أول 10 إيميلات لم يتم إرسالها
-        $emails = DB::table('emails')
-            ->where('sent', false)
+        $emails = DB::table('emails1')
+            ->where('sent', 0)
             ->limit(10)
             ->get();
 
@@ -35,19 +35,21 @@ class SendBulkEmails extends Command
         foreach ($emails as $email) {
             try {
                 // إرسال الإيميل
-                Mail::to($email->email)->send(new ONB([
-                    'email' => $email->email,
-                    'customer_number' => $email->customer_number,
+                Mail::to($email->EMAIL)->send(new ONB([
+                    'EMAIL' => $email->EMAIL,
+                    'CUS_NUM' => $email->CUS_NUM,
+                   
+
                 ]));
 
                 // تحديث حالة الإيميل إلى sent = true
-                DB::table('emails')
+                DB::table('emails1')
                     ->where('id', $email->id)
-                    ->update(['sent' => true]);
+                    ->update(['sent' => 1]);
 
-                $this->info("Email sent to: {$email->email}");
+                $this->info("Email sent to: {$email->EMAIL}");
             } catch (\Exception $e) {
-                $this->error("Failed to send email to: {$email->email}. Error: " . $e->getMessage());
+                $this->error("Failed to send email to: {$email->EMAIL}. Error: " . $e->getMessage());
             }
         }
 
