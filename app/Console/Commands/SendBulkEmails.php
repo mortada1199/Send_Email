@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BulkEmail;
+use App\Mail\ONB;
 use Illuminate\Support\Facades\DB;
 
 class SendBulkEmails extends Command
@@ -34,7 +35,7 @@ class SendBulkEmails extends Command
         foreach ($emails as $email) {
             try {
                 // إرسال الإيميل
-                Mail::to($email->email)->send(new BulkEmail([
+                Mail::to($email->email)->send(new ONB([
                     'email' => $email->email,
                     'customer_number' => $email->customer_number,
                 ]));
