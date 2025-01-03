@@ -23,7 +23,7 @@ class SendBulkEmails extends Command
         // جلب أول 10 إيميلات لم يتم إرسالها
         $emails = DB::table('emails1')
             ->where('sent', 0)
-            ->limit(10)
+            ->limit(2000)
             ->get();
 
         if ($emails->isEmpty()) {
